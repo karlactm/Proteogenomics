@@ -33,7 +33,6 @@ for (my $j = 0; $j < scalar (@round); $j++) {
             }
         }
         &fasta (@inputs);
-        #last;
 }
 
 #Processa as proteínas únicas de cada linhagem
@@ -52,12 +51,9 @@ sub gca {
         my $id_protein = @$proteins[$i]->getId;
         my $sequence = @$proteins[$i]->getSequence;
         my $split_protein = &splitProtein ($sequence);
-        #@pep = &tripticPeptide($sequence);
         $value++;
-        #print "GCA >KT$value \n";
         if ($gca_protein eq "/home/kctmachado/bacteria/dados_blastp/1_random/mycobacterium_tuberculosis/65/output_find_homologous/round_10/GCA_000195955.2_protein.faa") {
             print "KT$value\n";
- 
         }
         print $class "KT$value\tReference\n";
         print $id "# Accession Number KT$value\n";
@@ -79,8 +75,7 @@ sub fasta {
             exit 1; 
         }
         push @parsers, $parser;
-    }
-                                    
+    }                     
     for (my $k = 0; $k < scalar (@parsers); $k++) {
         my %peptides;
         my %classification;
@@ -98,15 +93,12 @@ sub fasta {
         my @samples_identity = ();
         my %homologous = ();
         #Escolhe a maior proteína do arquivo como referência
-        #print $k." ".scalar (@$proteins)."\n";
-        for (my $w = 0; $w < scalar (@$proteins); $w++) {
-            #print "$k >> ".@$proteins[$w]->getHeader." ".@$proteins[$w]->getSequenceSize." ".$sequence_size."\n";       
+        for (my $w = 0; $w < scalar (@$proteins); $w++) {      
             if (@$proteins[$w]->getSequenceSize > $sequence_size) {
                 $sequence_size = @$proteins[$w]->getSequenceSize;
                 $index_ref = $w;
                 $ref_sequence = @$proteins[$index_ref]->getSequence;
                 @ref_peptide = &tripticPeptide ($ref_sequence);
-                #print join ("\t", @ref_peptide)."\n";
              } elsif (@$proteins[$w]->getSequenceSize == $sequence_size) {
                  if ($ref_sequence =~ /([X|U])/) {
              	     $index_ref = $w;
@@ -116,7 +108,6 @@ sub fasta {
             }
         }
         $homologous {@$proteins[$index_ref]->getId} = scalar (@$proteins);
-
         #Percorre todas as proteínas
         for (my $w = 0; $w < scalar (@$proteins); $w++) { 
             if ($w == $index_ref) {
@@ -153,10 +144,7 @@ sub fasta {
                                      $mutation {$peptide} = "-";
                                      $amino {$peptide} = "-";
                                 }   
-                             } #else {
-                               #  $identity = 0;
-                             #}
-                             #next; 
+                             } 
                          }                                                                                     
                          #Classifica o peptídeo como mutado
                          $peptides {$parser_peptide[$y]} = 0;
@@ -172,18 +160,14 @@ sub fasta {
                              if (scalar (@index_aminoacids) <= 0.2 * length ($ref_peptide[$i])) {                             	
                                 foreach (@index_aminoacids) {                                                   
                                      if (&mutationInvalid ($array_ref[$_],$array_parser[$_])) {
-                                          #last OUTER;
-                                          #$peptides {$parser_peptide[$y]} = 1; 
                                           $mutation {$parser_peptide[$y]} = $ref_peptide[$i];
                                           next;
                                       } else {
-                                         #$peptides {$parser_peptide[$y]} = 0;
                                          $identity = 0;
                                          my $aminoacids .= $array_ref[$_]."->".$array_parser[$_]; 
                                          $amino {$parser_peptide[$y]} = $aminoacids;
                                          $mutation {$parser_peptide[$y]} = $ref_peptide[$i];
                                          $sample {$parser_peptide[$y]} .= @$proteins[$w]->getSample." [".@$proteins[$w]->getId."]|";
-                                         #print "->".$sample {$parser_peptide[$y]}."\n";
                                          $classification {$parser_peptide[$y]} = "SAP";
                                          $index_parser = $w;
                                          last OUTER;
@@ -194,7 +178,6 @@ sub fasta {
                               my @index_aminoacids = split(",", &comparePeptide(\@array_ref, \@array_parser));
                               if ($index_aminoacids [$#index_aminoacids] eq "-1") {
                                   pop (@index_aminoacids);
-                                  #print "=>> ".join ("", @array_parser)." y = $y i = $i\n";
                                   if ((scalar (@index_aminoacids)) <= (int (0.2 * length ($parser_peptide[$y])))) {
                                      foreach (@index_aminoacids) {                                                   
                                          if (&mutationInvalid ($array_ref[$_],$array_parser[$_])) {
@@ -205,7 +188,6 @@ sub fasta {
                                              $amino {$parser_peptide[$y]} = $aminoacids;
                                              $mutation {$parser_peptide[$y]} = $ref_peptide[$i];
                                              $sample {$parser_peptide[$y]} .= @$proteins[$w]->getSample." [".@$proteins[$w]->getId."]|";
-                                             #print "->".$sample {$parser_peptide[$y]}."\n";
                                              $classification {$parser_peptide[$y]} = "SAP R|K";
                                              $index_parser = $w;
                                              $last_index = ($index_aminoacids[$#index_aminoacids] + 1);
@@ -221,11 +203,6 @@ sub fasta {
                                               push (@div_ref, $array_ref[$x]);
                                               $new_peptide .= $array_ref[$x];
                                           }
-                                          if ($ref_peptide [$i] eq "HFYSQAVEEXNHAMMLVQHLLDR" ) {
-                                              print $ref_peptide [$i]." ".$new_peptide." ".$parser_peptide [$y]."\n";
-                                              my @index_aminoacids = split(",", &comparePeptide(\@div_ref, \@array_parser));
-                                              print join ("\t", @index_aminoacids)."\n";
-                                          }
 
                                           if (scalar (@div_ref) == scalar (@array_parser)) {
                                               my @index_aminoacids = split(",", &comparePeptide(\@div_ref, \@array_parser));
@@ -235,7 +212,6 @@ sub fasta {
                                                       $amino {$parser_peptide[$y]} = "-";
                                                       $mutation {$parser_peptide[$y]} = $ref_peptide[$i];
                                                       $sample {$parser_peptide[$y]} .= @$proteins[$w]->getSample." [".@$proteins[$w]->getId."]|";
-                                                      #print "->".$sample {$parser_peptide[$y]}."\n";
                                                       $classification {$parser_peptide[$y]} = "SAP R|K";
                                                       $index_parser = $w;
                                                       $last_index = undef;
@@ -250,7 +226,6 @@ sub fasta {
                                                               $amino {$parser_peptide[$y]} = $aminoacids;
                                                               $mutation {$parser_peptide[$y]} = $ref_peptide[$i];
                                                               $sample {$parser_peptide[$y]} .= @$proteins[$w]->getSample." [".@$proteins[$w]->getId."]|";
-                                                              #print "->".$sample {$parser_peptide[$y]}."\n";
                                                               $classification {$parser_peptide[$y]} = "SAP R|K";
                                                               $index_parser = $w;
                                                               $last_index = undef;
@@ -262,9 +237,7 @@ sub fasta {
                                         }
                                     } 
                                 }  
-                              } #else {
-                                  #Inserção e deleção
-                              #}                            
+                              }                          
                         } elsif (scalar (@array_ref) < scalar (@array_parser))  {
                               my @index_aminoacids = split(",", &comparePeptide(\@array_ref, \@array_parser));
                               if ($index_aminoacids [$#index_aminoacids] eq "-1") {
@@ -279,24 +252,18 @@ sub fasta {
                                               $amino {$parser_peptide[$y]} = $aminoacids;
                                               $mutation {$parser_peptide[$y]} = $ref_peptide[$i];
                                               $sample {$parser_peptide[$y]} .= @$proteins[$w]->getSample." [".@$proteins[$w]->getId."]|";
-                                              #print "->".$sample {$parser_peptide[$y]}."\n";
                                               $classification {$parser_peptide[$y]} = "SAP R|K";
                                               $index_parser = $w;
                                               last OUTER;
                                         }
                                       }
                                   }
-                              } #else { 
-                                  #Inserção e Deleção
-                              #}
-                      
+                              }                       
                      }
                   } #Fim do else
                } #Fim do for que percorre ref_peptide
-               
                  
                 if (($peptides {$parser_peptide[$y]} == 0) && (($mutation {$parser_peptide[$y]} eq undef) || ($mutation {$parser_peptide[$y]} eq "NOT FOUND"))) {
-                      #print "y = $y i =  ".$parser_peptide[$y]."\t".$peptides{$parser_peptide[$y]}."\n";
                       $identity = 0;
                       $mutation {$parser_peptide[$y]} = "NOT FOUND";
                       $amino {$parser_peptide[$y]} = "-";
@@ -309,7 +276,6 @@ sub fasta {
                my $sample_id = @$proteins[$w]->getSample." [".@$proteins[$w]->getId."]";
                push (@samples_identity, $sample_id); 
            } 
-           #last;
         } #Fim do for que precorre proteins
 
         my $artificial_peptide = undef;
@@ -328,10 +294,8 @@ sub fasta {
             $artificial_peptide .= $c_terminal; 
         }  
         $value++;	
-        #print ">KT$value ".$artificial_peptide."\n";
         my $split_protein = &splitProtein (@$proteins[$index_ref]->getSequence);
         print $db ">KT$value ".@$proteins[$index_ref]->getDescription."\n".$split_protein; 
-        #print $k." >KT$value ".@$proteins[$index_ref]->getDescription."\n".$split_protein."\n";
         my $s = undef;
         for (my $h = 0; $h < scalar (@samples_identity); $h++){
             $s .= $samples_identity[$h]."|";
@@ -344,7 +308,6 @@ sub fasta {
             print $id "# Number of strains with 100% identity = ".scalar (@samples_identity)."\n";
             print $map "KT$value\t".@$proteins[$index_ref]->getId."\tReference\n";
             if (defined $s) {
-                #$s = &splitSamples($s);
                 print $id "# Fields: entries with 100% identity\n$s\n";
             }
             $value++;
@@ -354,21 +317,16 @@ sub fasta {
             } else {
             	$artificial_peptide .= "\n";
             }
-            #print "PEP DIF >KT$value\n";
             print $db ">KT$value ".@$proteins[$index_parser]->getDescription."\n".$artificial_peptide;
-            #print $class "KT$value\tMutated\n";
             print $id "# Accession Number KT$value\n";
             print $id "# Artificial entry\n";
             print $id "# Fields: modification, peptide, peptide mutated, aminoacid mutation, strain\n";
             print $map "KT$value\t".@$proteins[$index_ref]->getId."\tMutated\n";
             foreach (keys %classification) {
-                #print "-".$sample{$_}."\n";
-                #my $split_sample = &splitSamples ($sample{$_});
                 print $id $classification{$_}."\t".$mutation {$_}."\t".$_."\t".$amino {$_}."\t".$sample {$_}."\n";  
             }
         } else {
             if (defined $s) {
-                #$s = &splitSamples ($s);
                 print $class "KT$value\tReference\n";
                 print $id "# Accession Number KT$value\n";
                 print $id "# Reference entry\n";
@@ -411,7 +369,6 @@ sub mutationInvalid {
    }
 }
 
-
 sub splitProtein {
     my ($protein) = $_[0];
     my $split_protein = "";
@@ -428,7 +385,6 @@ sub comparePeptide {
         if (@$peptide_1[$i] ne @$peptide_2[$i]) {
             $index_aminoacids .= $i.",";
             if (@$peptide_1[$i] =~ /(R|K)/ || @$peptide_2[$i] =~/(R|K)/) {
-                #print "-> ".@$peptide_1[$i]." ".@$peptide_2[$i]."\n";
                 #Se mutação de gerar um novo peptídeo tríptico setar $index_aminoacids para -1
                 $index_aminoacids .= "-1"; 
                 return $index_aminoacids;
@@ -436,34 +392,6 @@ sub comparePeptide {
         }
     }
     return $index_aminoacids;
-}
-
-sub splitSamples {
-    my @samples = split (//,$_[0]);
-    my $counter = 0;
-    my $size = 0;
-    my $split_sample = undef;
-    for (my $k = 0; $k < scalar (@samples); $k++) {
-        $counter++;
-        $split_sample .= $samples[$k];
-        if ($samples[$k] eq "|") {
-            if ($counter > 70) {
-                #$size = (length ($split_sample) - 1);
-                #$split_sample = substr ($split_sample , 0, $size);
-                #print $split_sample."\n";
-                $split_sample .= "\n";
-                $counter = 0;
-             } else {
-                 if ($k == (scalar (@samples) - 1)) {
-                      $split_sample .= "\n";
-                  }
-            }
-        }
-        #$counter++;
-    }
-    #$size = (length ($split_sample) - 1);
-    #$split_sample = substr ($split_sample, 0, $size);
-    return $split_sample;
 }
 
 print "pronto\n";
