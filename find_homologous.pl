@@ -16,7 +16,7 @@ foreach (@list) {
     if($_=~/(.faa)$/){
         my $parser = FASTAParser->new($directory.$_);
         if (!$parser->parse) {
-            print "-> Insira um arquivo no formato FASTA!";
+            print "-> Insert FASTA file!";
             exit 1; 
         }
         my $proteins = $parser->getProteins;
@@ -39,7 +39,7 @@ for (my $i = 4; $i <= $#ARGV ; $i++) {
     print "-> $i $ARGV[$i]\n";
     $ref_proteins = BLASTParser->new($ARGV[$i]);
     if (!$ref_proteins->parse) {
-        print "-> Insira um arquivo no formato do BLAST!";
+        print "-> Insert blast file!";
         exit 1; 
     }
     my ($ref, $not_found_ref) = &align ($ref_proteins);
@@ -51,7 +51,7 @@ for (my $i = 4; $i <= $#ARGV ; $i++) {
 
     $parser_proteins = BLASTParser->new($parser_path);
     if (!$parser_proteins->parse) {
-        print "-> Insira um arquivo no formato do BLAST!";
+        print "-> Insert blast file!";
         exit 1; 
     }  
     my ($parser, $not_found_parser) = &align ($parser_proteins);  
