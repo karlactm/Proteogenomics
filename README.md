@@ -27,7 +27,7 @@ The following output file will be created into output folder. The output files a
 Run create_database.pl to create database
 
 ```
-create_database.pl /output_folder/
+create_db.pl /output_folder/
 ```
 
 
