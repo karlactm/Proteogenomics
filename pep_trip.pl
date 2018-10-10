@@ -35,13 +35,13 @@ for (my $j = 0; $j < scalar (@round); $j++) {
         &fasta (@inputs);
 }
 
-#Processa as proteínas únicas de cada linhagem
+#Processes the unique proteins of each lineage
 sub gca {
     my $gca_protein = $_[0];
     print "> ".$gca_protein."\n";   
     my $parser = FASTAParser->new($gca_protein);
     if (!$parser->parse) {
-        print "-> Insira um arquivo no formato FASTA!";
+        print "-> Insert FASTA file!";
         exit 1; 
     }
     my $proteins = $parser->getProteins;
@@ -52,9 +52,6 @@ sub gca {
         my $sequence = @$proteins[$i]->getSequence;
         my $split_protein = &splitProtein ($sequence);
         $value++;
-        if ($gca_protein eq "/home/kctmachado/bacteria/dados_blastp/1_random/mycobacterium_tuberculosis/65/output_find_homologous/round_10/GCA_000195955.2_protein.faa") {
-            print "KT$value\n";
-        }
         print $class "KT$value\tReference\n";
         print $id "# Accession Number KT$value\n";
         print $id "# Single entry: $sample [".$id_protein."]\n";
@@ -63,12 +60,11 @@ sub gca {
     }
 }
 
-#Processas as proteínas homólogas entre as linhagens
+#Processes the homologous proteins between the lineages
 sub fasta {
     my @inputs = @_;
     my @parsers = ();
     for (my $i = 0; $i < scalar (@inputs) ; $i++) {
-        #print "->  $i - $inputs[$i]\n";
         my $parser = FASTAParser->new($inputs[$i]);
         if (!$parser->parse) {
             print "-> Insira um arquivo no formato FASTA!";
@@ -92,7 +88,7 @@ sub fasta {
         my $proteins = $parsers[$k]->getProteins;
         my @samples_identity = ();
         my %homologous = ();
-        #Escolhe a maior proteína do arquivo como referência
+        #Choose protein with higher number of aminoacids as a reference
         for (my $w = 0; $w < scalar (@$proteins); $w++) {      
             if (@$proteins[$w]->getSequenceSize > $sequence_size) {
                 $sequence_size = @$proteins[$w]->getSequenceSize;
@@ -108,7 +104,7 @@ sub fasta {
             }
         }
         $homologous {@$proteins[$index_ref]->getId} = scalar (@$proteins);
-        #Percorre todas as proteínas
+
         for (my $w = 0; $w < scalar (@$proteins); $w++) { 
             if ($w == $index_ref) {
                 next;
@@ -117,13 +113,12 @@ sub fasta {
             @parser_peptide = &tripticPeptide ($parser_sequence);
             my $identity = 1;
             my $last_index = undef;
-            #Percorre todos os peptídeos da proteína parse
+
             for (my $y = 0; $y < scalar (@parser_peptide); $y++) {
-                #Percorre todos os pepídeos da proteína referência            
+     
                 OUTER: for (my $i = 0; $i < scalar(@ref_peptide); $i++) {
-                     #Verifica se os peptídeo são iguais
+                     #Checks if peptides are the same
                      if ($parser_peptide[$y] eq $ref_peptide[$i]) {
-                         #Classifica o peptídeo como livre de mutação
                          $peptides {$parser_peptide[$y]} = 1;                    
                          last OUTER;
                      } else {
@@ -146,9 +141,7 @@ sub fasta {
                                 }   
                              } 
                          }                                                                                     
-                         #Classifica o peptídeo como mutado
                          $peptides {$parser_peptide[$y]} = 0;
-                         #Quebra os peptídeos em aminoácidos
                          my @array_ref = split (//, $ref_peptide[$i]);
                          my @array_parser = split (//, $parser_peptide[$y]);  
 
@@ -195,7 +188,7 @@ sub fasta {
                                         }     
                                     }
 
-                                  } else { #Processa a segunda parte do peptídeo que foi quebrado
+                                  } else { 
                                       if (defined $last_index) {
                                           my @div_ref = ();
                                           my $new_peptide = undef;
@@ -260,8 +253,8 @@ sub fasta {
                                   }
                               }                       
                      }
-                  } #Fim do else
-               } #Fim do for que percorre ref_peptide
+                  } 
+               } 
                  
                 if (($peptides {$parser_peptide[$y]} == 0) && (($mutation {$parser_peptide[$y]} eq undef) || ($mutation {$parser_peptide[$y]} eq "NOT FOUND"))) {
                       $identity = 0;
@@ -271,12 +264,12 @@ sub fasta {
                       $classification {$parser_peptide[$y]} = "NC";
                       $peptides {$parser_peptide[$y]} = 0;
                 }
-           } #Fim do for que percorre parser_peptide
+           }
            if ($identity) {
                my $sample_id = @$proteins[$w]->getSample." [".@$proteins[$w]->getId."]";
                push (@samples_identity, $sample_id); 
            } 
-        } #Fim do for que precorre proteins
+        }
 
         my $artificial_peptide = undef;
         my $c_terminal = undef;
@@ -385,7 +378,6 @@ sub comparePeptide {
         if (@$peptide_1[$i] ne @$peptide_2[$i]) {
             $index_aminoacids .= $i.",";
             if (@$peptide_1[$i] =~ /(R|K)/ || @$peptide_2[$i] =~/(R|K)/) {
-                #Se mutação de gerar um novo peptídeo tríptico setar $index_aminoacids para -1
                 $index_aminoacids .= "-1"; 
                 return $index_aminoacids;
             }               
@@ -393,5 +385,3 @@ sub comparePeptide {
     }
     return $index_aminoacids;
 }
-
-print "pronto\n";
