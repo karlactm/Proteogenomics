@@ -7,7 +7,7 @@ my $output_ref_path = $ARGV[0];
 my $output_parser_path = $ARGV[1];
 my $ref_fasta = FASTAParser->new ($ARGV[2]);
 if (!$ref_fasta->parse) {
-    print "-> Insira um arquivo no formato FASTA!";
+    print "-> Insert FASTA file!";
     exit 1; 
 }
 my $ref_path = $ref_fasta->getFilePath;
@@ -16,13 +16,12 @@ my $ref_fileName = $ref_fasta->getFileName;
 for (my $i = 3; $i <= $#ARGV ; $i++) {
     my $parser = FASTAParser->new($ARGV[$i]);
     if (!$parser->parse) {
-        print "-> Insira um arquivo no formato FASTA!";
+        print "-> Insert FASTA file!";
         exit 1; 
     }
     push @parsers, $parser;
 }
 my $y = 0;
-print "->> ".scalar(@parsers)."\n";
 for (my $i = 0; $i < scalar(@parsers); $i++) {
     my $parser_path = $parsers[$i]->getFilePath;
     my $parser_fileName = $parsers[$i]->getFileName;
