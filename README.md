@@ -6,7 +6,9 @@ For the construction of databases, the tool performs the alignment of protein se
 
 ## Script design and availability
 
-The tool was designed in PERL and is present as two modules: rand.pl provides the sequence alignment and creates the outputs with unique entries and homologues; create_bd.pl process the homologues output, and create the final database and the log file. In house BLAST installation is required. 
+The tool was designed in PERL and is present as two modules: rand.pl provides the sequence alignment and creates the outputs with unique entries and homologues; create_bd.pl process the homologues output, and create the final database and the log file. In house BLAST installation is required.
+
+![diagrama](https://user-images.githubusercontent.com/8170234/46799804-26eb2580-cd2c-11e8-95bb-4a2da2b573d9.png)
 
 Click [here](https://github.com/karlactm/Proteogenomics.git) to download or clone the scripts.
 
