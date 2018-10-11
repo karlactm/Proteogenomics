@@ -4,7 +4,7 @@ The bioinformatic tool builds proteins sequence databases customized,through pro
 
 The tool defines unique annotated proteins as well as protein homologues across strains, adding all unique sequence information in the final database on a non-redundant manner.
 
-## Script design and availability
+## Script design and download
 
 The tool was designed in PERL and is present as two modules: rand.pl provides the sequence alignment and creates the outputs with unique entries and homologues; create_bd.pl process the homologues output, and create the final database and the log file. In house [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) installation is required.
 
