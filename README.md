@@ -2,7 +2,7 @@
 
 The bioinformatic tool builds proteins sequence databases customized,through processing and analysis of protein sequence data from several strains of the same bacterial species.
 
-For the construction of databases, the tool performs the alignment of protein sequences of bacteria strains. Then, identifies and compares homologous and uniquely annotated proteins in all strains. And finally, reports those sequences in a non-redundant manner, which means, sequences extensively repeated among annotations are reported only once in order to keep the size database under control. Databases also report sequence variations, whether they result from genetic variations or annotation divergences.
+The tool defines unique annotated proteins as well as protein homologues across strains, adding all unique sequence information in the final database on a non-redundant manner.
 
 ## Script design and availability
 
