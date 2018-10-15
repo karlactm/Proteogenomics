@@ -99,7 +99,7 @@ for (my $i = 4; $i <= $#ARGV ; $i++) {
              delete $proteins_not_found_ref{$key};
          }
      }
-     print "Proteins_not_found_ref = ".scalar(keys %proteins_not_found_ref)."\n";
+     #print "Proteins_not_found_ref = ".scalar(keys %proteins_not_found_ref)."\n";
      &writeGCA (%proteins_not_found_parser);
 }  
 &writeInputs (%proteins_found);
