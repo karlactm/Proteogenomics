@@ -6,7 +6,7 @@ The tool defines unique annotated proteins as well as protein homologues across 
 
 ## Script design and download
 
-The tool was designed in PERL and is present as two modules: **rand.pl** provides the sequence alignment and creates the outputs with unique entries and homologues using random fasta inputs, already to create outputs with all fasta files in folder use all_fasta.pl.; **create_bd.pl** process the homologues output, and create  to create different sized databases. In house [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) installation is required.
+The tool was designed in PERL and is present as two modules: **rand.pl** provides the sequence alignment and creates the outputs with unique entries and homologues using random fasta inputs, already to create outputs with all fasta files in folder use all_fasta.pl.; **create_bd.pl** process the homologues output, and create different sized databases. In house [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) installation is required.
 
 ![diagrama](https://user-images.githubusercontent.com/8170234/46799804-26eb2580-cd2c-11e8-95bb-4a2da2b573d9.png)
 
