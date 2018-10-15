@@ -1,6 +1,6 @@
 # Proteogenomics
 
-The bioinformatic tool builds proteins sequence databases customized,through processing and analysis of protein sequence data from several strains of the same bacterial species.
+The bioinformatic tool builds proteins sequence databases customized, through processing and analysis of protein sequence data from several strains of the same bacterial species.
 
 The tool defines unique annotated proteins as well as protein homologues across strains, adding all unique sequence information in the final database on a non-redundant manner.
 
