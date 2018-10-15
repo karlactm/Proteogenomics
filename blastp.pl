@@ -27,6 +27,8 @@ for (my $i = 0; $i < scalar(@parsers); $i++) {
     my $parser_fileName = $parsers[$i]->getFileName;
     my $parser_output = $output_parser_path."/".$y."_PARSER_GCA_".$parser_fileName."_GCA_".$ref_fileName."_output.txt";
     my $ref_output = $output_ref_path."/".$y."_REF_GCA_".$ref_fileName."_GCA_".$parser_fileName."_output.txt";
+    print $y." | BLAST | $ref_fileName\t$parser_fileName\n";
+    `/usr/bin/makeblastdb -in $ref_path -dbtype prot -title GCA_$ref_fileName`;
     `makeblastdb -in $ref_path -dbtype prot -title GCA_$ref_fileName`;
     `makeblastdb -in $parser_path -dbtype prot -title GCA_$parser_fileName`;   
     `blastp -query $ref_path -db $parser_path -num_alignments 3 -num_threads 8 -out $ref_output -outfmt '7 qseqid sseqid pident ppos length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen qcovs qcovhsp'`;
