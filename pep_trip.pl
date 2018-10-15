@@ -3,7 +3,9 @@ use strict;
 use FASTAParser;
 
 my $dir = $ARGV[0];
-system ("mkdir $dir/output_peptide_trip/");
+unless (-d $dir."/output_peptide_trip/") {
+    system ("mkdir $dir/output_peptide_trip/");
+}
 my $dir_db = $dir."output_pep_trip/database.txt";
 my $dir_map = $dir."output_pep_trip/map.txt";
 my $dir_id = $dir."output_pep_trip/identification.txt";
