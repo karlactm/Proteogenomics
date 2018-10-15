@@ -36,7 +36,7 @@ my $count = 0;
 
 for (my $i = 4; $i <= $#ARGV ; $i++) {
     my %proteins_not_found_parser = ();
-    print "-> $i $ARGV[$i]\n";
+    #print "-> $i $ARGV[$i]\n";
     $ref_proteins = BLASTParser->new($ARGV[$i]);
     if (!$ref_proteins->parse) {
         print "-> Insert blast file!";
