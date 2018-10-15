@@ -307,7 +307,7 @@ sub fasta {
                 print $id "# Fields: entries with 100% identity\n$s\n";
             }
             $value++;
-            print $class "KT$value\tMutated\n";
+            print $class "KT$value\tArtificial\n";
             if (length ($artificial_peptide) > 70) {
                 $artificial_peptide = &splitProtein ($artificial_peptide);
             } else {
@@ -317,7 +317,7 @@ sub fasta {
             print $id "# Accession Number KT$value\n";
             print $id "# Artificial entry\n";
             print $id "# Fields: modification, peptide, peptide mutated, aminoacid mutation, strain\n";
-            print $map "KT$value\t".@$proteins[$index_ref]->getId."\tMutated\n";
+            print $map "KT$value\t".@$proteins[$index_ref]->getId."\tArtificial\n";
             foreach (keys %classification) {
                 print $id $classification{$_}."\t".$mutation {$_}."\t".$_."\t".$amino {$_}."\t".$sample {$_}."\n";  
             }
