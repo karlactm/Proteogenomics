@@ -16,7 +16,7 @@ Click [here](https://github.com/karlactm/Proteogenomics.git) to download or clon
 
 Download / copy FASTA files of interest into input folder 
 
-Execute **all-fasta.pl** to create a database with all fasta files in folder. Use **rand.pl** to create different sized databases using random fasta inputs, to reproduce data analysis from Machado et al., bioRx 2018.
+Execute **all_fasta.pl** to create a database with all fasta files in folder. Use **rand.pl** to create different sized databases using random fasta inputs, to reproduce data analysis from Machado et al., bioRx 2018.
 
 ```
 all_fasta.pl /input_folder/ /output_folder/
