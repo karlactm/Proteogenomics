@@ -75,12 +75,16 @@ do
   fi
   CURRENT_REF_L=($(ls ${PATHROUND}/output/*.faa))
   CURRENT_REF=$(basename ${CURRENT_REF_L[0]})
-  ./blastp.pl ${PATHREF} ${PATHPARSER} ${PATHROUND}/output/*.faa
-  ./find_homologous.pl $i ${PATHFASTA} ${PATHBLAST} ${PATHHOMOLOGOUS} ${PATHREF}/*.txt
-  TOMOVE="${NEWPATHROUND}/output/${CURRENT_REF}"
-  echo "Move ${TOMOVE} to .."
-  if [ -e "${TOMOVE}" ]; then
-     echo "Moving ${TOMOVE} to .."
-     mv ${TOMOVE} ${NEWPATHROUND}
+  size=`ls ${PATHROUND}/output/*.faa | wc -l`
+  if [ $size -gt 1 ]
+      then
+          ./blastp.pl ${PATHREF} ${PATHPARSER} ${PATHROUND}/output/*.faa
+          ./find_homologous.pl $i ${PATHFASTA} ${PATHBLAST} ${PATHHOMOLOGOUS} ${PATHREF}/*.txt
+          TOMOVE="${NEWPATHROUND}/output/${CURRENT_REF}"
+          echo "Move ${TOMOVE} to .."
+          if [ -e "${TOMOVE}" ]; then
+              echo "Moving ${TOMOVE} to .."
+              mv ${TOMOVE} ${NEWPATHROUND}
+          fi
   fi
 done
