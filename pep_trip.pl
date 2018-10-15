@@ -6,10 +6,10 @@ my $dir = $ARGV[0];
 unless (-d $dir."/output_pep_trip/") {
     system ("mkdir $dir/output_pep_trip/");
 }
-my $dir_db = $dir."output_pep_trip/database.txt";
-my $dir_map = $dir."output_pep_trip/map.txt";
-my $dir_id = $dir."output_pep_trip/identification.txt";
-my $dir_class = $dir."output_pep_trip/classification.txt";
+my $dir_db = $dir."/output_pep_trip/database.txt";
+my $dir_map = $dir."/output_pep_trip/map.txt";
+my $dir_id = $dir."/output_pep_trip/identification.txt";
+my $dir_class = $dir."/output_pep_trip/classification.txt";
 open(my $db, ">", $dir_db);
 open(my $map, ">", $dir_map);
 open(my $id, ">", $dir_id);
@@ -23,7 +23,7 @@ my @round = grep { /^round/ } readdir($dh);
 closedir $dh;
 
 for (my $j = 0; $j < scalar (@round); $j++) {
-        my $dir_input = $dir.$round[$j]."/";
+        my $dir_input = $dir."/".$round[$j]."/";
         opendir(my $input, $dir_input) || die "Can't opendir $dir_input: $!";
         print $dir_input."\n";
         my @inputs = ();
