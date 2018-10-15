@@ -27,7 +27,7 @@ The following homologues output will be created into output folder.
 Run **create_database.pl** to create different sized databases using random fasta inputs. Use **pep_trip.pl** to create a database with all fasta files in folder.
 
 ```
-pep_trip.pl /output_folder/
+pep_trip.pl /output_folder/*output_find_homologous*
 ```
 
 
