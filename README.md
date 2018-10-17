@@ -12,7 +12,7 @@ The tool was designed in PERL and is present as two modules:
 
 In house [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) installation is required.
 
-![diagrama](https://user-images.githubusercontent.com/8170234/46799804-26eb2580-cd2c-11e8-95bb-4a2da2b573d9.png)
+![diagrama](https://user-images.githubusercontent.com/8170234/47113468-84e9a280-d22f-11e8-9626-f504ad465cf1.png)
 
 Click [here](https://github.com/karlactm/Proteogenomics.git) to download or clone the scripts.
 
