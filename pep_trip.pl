@@ -277,14 +277,14 @@ sub fasta {
         my $artificial_peptide = undef;
         my $c_terminal = undef;
         foreach (keys %peptides) {
-        	my $boolean = $peptides {$_};
+            my $boolean = $peptides {$_};
             if (!$boolean) {
-        	    if ($_ =~ /([^RK]+(R|K))/gci) {
-        		    $artificial_peptide = $_;
-        	    } else {
-                    $c_terminal = $_;
-        	    }
-        	}
+                 if ($_ =~ /([^RK]+(R|K))/gci) {
+        	     $artificial_peptide .= $_;
+        	 } else {
+                     $c_terminal = $_;
+        	 }
+            }
         } 
         if (defined ($c_terminal)){
             $artificial_peptide .= $c_terminal; 
